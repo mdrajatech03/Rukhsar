@@ -3,61 +3,68 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Rehmani Edition | Birthday</title>
+    <title>The Rehmani Edition | Rose Rain</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,700;1,400&family=Poppins:wght@200;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
-
+    
     <style>
         :root {
-            --burgundy: #800020;
+            --primary: #800020;
             --gold: #c9a543;
             --white: #ffffff;
-            --black: #121212;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            background-color: var(--black);
-            font-family: 'Montserrat', sans-serif;
+            background-color: #000;
+            font-family: 'Poppins', sans-serif;
+            overflow: hidden;
             height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            overflow: hidden;
         }
 
-        /* Responsive Container */
-        .master-container {
-            width: 90%;
-            max-width: 900px;
-            height: 550px;
+        /* --- Rose Rain Canvas --- */
+        #rose-canvas {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 99;
+        }
+
+        /* --- Responsive Main Container --- */
+        .master-card {
+            width: 90vw;
+            height: 80vh;
             background: var(--white);
             display: flex;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.5);
-            border-radius: 4px;
+            box-shadow: 0 50px 100px rgba(0,0,0,0.5);
+            border-radius: 8px;
             overflow: hidden;
+            z-index: 100;
             position: relative;
         }
 
-        /* Image Section (Desktop Only Side) */
-        .side-image {
-            flex: 1;
+        /* Photo Section */
+        .photo-side {
+            flex: 1.2;
             background: url('1000372340.jpg') center/cover no-repeat;
             filter: contrast(1.1);
         }
 
         /* Content Section */
-        .content-panel {
+        .text-side {
             flex: 1;
-            padding: 40px;
+            padding: 60px;
             display: flex;
             flex-direction: column;
             justify-content: center;
-            text-align: center;
-            background: var(--white);
+            background: white;
+            position: relative;
         }
 
         .label {
@@ -69,148 +76,168 @@
         }
 
         h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.8rem;
-            color: var(--burgundy);
-            line-height: 1.1;
+            font-family: 'Bodoni Moda', serif;
+            font-size: 3.5rem;
+            line-height: 1;
+            color: var(--primary);
             margin-bottom: 25px;
         }
 
-        /* Animated Elements */
-        .features {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            margin-bottom: 30px;
+        .desc {
+            color: #555;
+            font-weight: 300;
+            line-height: 1.6;
+            margin-bottom: 40px;
+            font-size: 0.9rem;
         }
 
-        .item { color: var(--burgundy); font-size: 1.5rem; }
-        .item p { font-size: 0.6rem; color: #888; margin-top: 5px; letter-spacing: 2px; }
-
-        .fa-rose { animation: heartBeat 2s infinite; color: #ff4d6d; }
-        .fa-cake-candles { animation: pulse 2s infinite; color: var(--gold); }
-
-        .btn-open {
-            padding: 15px 30px;
-            background: var(--burgundy);
+        .btn-surprise {
+            padding: 15px 40px;
+            background: var(--primary);
             color: white;
             border: none;
             text-transform: uppercase;
             letter-spacing: 3px;
             font-size: 0.8rem;
             cursor: pointer;
-            transition: 0.3s;
-            margin: 0 auto;
+            transition: 0.4s;
+            width: fit-content;
         }
 
-        .btn-open:hover {
-            background: #a50029;
-            transform: translateY(-2px);
+        .btn-surprise:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(128, 0, 32, 0.3);
         }
 
-        /* --- Surprise Reveal Overlay --- */
-        #overlay {
+        /* Floating Icons */
+        .icons-float {
+            position: absolute;
+            top: 40px; right: 40px;
+            color: var(--primary);
+            text-align: center;
+        }
+
+        /* Mobile Adjustments */
+        @media (max-width: 768px) {
+            .master-card { flex-direction: column; height: auto; margin-top: 20px; }
+            .photo-side { height: 300px; }
+            .text-side { padding: 40px 20px; text-align: center; align-items: center; }
+            h1 { font-size: 2.5rem; }
+            .icons-float { display: none; }
+        }
+
+        /* Message Overlay */
+        #message-overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: var(--burgundy);
-            z-index: 1000;
+            background: rgba(128, 0, 32, 0.95);
             display: none;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
-            text-align: center;
+            z-index: 2000;
             color: white;
+            text-align: center;
             padding: 20px;
-        }
-
-        .message-title { font-family: 'Playfair Display', serif; font-size: 2.5rem; margin-bottom: 20px; }
-        .message-text { font-size: 1rem; max-width: 500px; line-height: 1.8; font-weight: 300; }
-
-        /* --- MEDIA QUERIES (Mobile Responsiveness) --- */
-        @media (max-width: 768px) {
-            .master-container {
-                flex-direction: column;
-                height: auto;
-                max-width: 380px;
-                padding-bottom: 30px;
-            }
-            .side-image {
-                height: 250px; /* Small image on top for mobile */
-                width: 100%;
-            }
-            h1 { font-size: 2.2rem; }
-            .content-panel { padding: 30px 20px; }
-        }
-
-        @media (max-width: 480px) {
-            .master-container { width: 95%; }
-            h1 { font-size: 1.8rem; }
         }
     </style>
 </head>
 <body>
 
-    <div class="master-container animate__animated animate__zoomIn">
-        <div class="side-image"></div>
-        
-        <div class="content-panel">
-            <span class="label">Birthday Edition</span>
-            <h1>Rukhsar <br> Rehmani</h1>
-            
-            <div class="features">
-                <div class="item">
-                    <i class="fa-solid fa-rose"></i>
-                    <p>GRACE</p>
-                </div>
-                <div class="item">
-                    <i class="fa-solid fa-cake-candles"></i>
-                    <p>WISHES</p>
-                </div>
+    <canvas id="rose-canvas"></canvas>
+
+    <div class="master-card">
+        <div class="photo-side"></div>
+        <div class="text-side">
+            <div class="icons-float">
+                <i class="fa-solid fa-cake-candles" style="color: var(--gold); font-size: 1.5rem;"></i>
             </div>
-
-            <button class="btn-open" onclick="triggerSurprise()">Reveal Surprise</button>
+            <span class="label">The Exclusive Edition</span>
+            <h1>Rukhsar <br> Rehmani</h1>
+            <p class="desc">
+                Unveiling a special digital celebration for a soul that defines elegance. May your day be as fragrant as the roses falling around you.
+            </p>
+            <button class="btn-surprise" onclick="showMsg()">The Surprise</button>
         </div>
     </div>
 
-    <div id="overlay">
-        <div class="animate__animated animate__fadeInDown">
-            <i class="fa-solid fa-heart" style="font-size: 2rem; color: var(--gold); margin-bottom: 20px;"></i>
-            <h2 class="message-title">Happy Birthday!</h2>
-            <p class="message-text">"Wishing you a day that is as beautiful and amazing as you are. May all your dreams come true, Rukhsar."</p>
-            <button class="btn-open" style="margin-top: 40px; border: 1px solid white; background: none;" onclick="location.reload()">Back</button>
+    <div id="message-overlay">
+        <div>
+            <h2 style="font-family: 'Bodoni Moda'; font-size: 3rem; margin-bottom: 20px;">Happy Birthday!</h2>
+            <p style="font-style: italic; font-weight: 200; font-size: 1.2rem; max-width: 500px;">
+                "Rukhsar, May your path always be covered in roses and your life filled with sweet celebrations."
+            </p>
+            <button class="btn-surprise" style="background: white; color: var(--primary); margin-top: 40px;" onclick="location.reload()">Return</button>
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <script>
-        function triggerSurprise() {
-            document.getElementById('overlay').style.display = 'flex';
-            
-            // Professional Confetti blast
-            var end = Date.now() + (3 * 1000);
-            var colors = ['#c9a543', '#ffffff', '#ff0000'];
+        const canvas = document.getElementById('rose-canvas');
+        const ctx = canvas.getContext('2d');
 
-            (function frame() {
-              confetti({
-                particleCount: 3,
-                angle: 60,
-                spread: 55,
-                origin: { x: 0 },
-                colors: colors
-              });
-              confetti({
-                particleCount: 3,
-                angle: 120,
-                spread: 55,
-                origin: { x: 1 },
-                colors: colors
-              });
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
 
-              if (Date.now() < end) {
-                requestAnimationFrame(frame);
-              }
-            }());
+        const petals = [];
+        const roseEmoji = "🌹";
+
+        class Petal {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height - canvas.height;
+                this.size = Math.random() * 20 + 15;
+                this.speed = Math.random() * 2 + 1;
+                this.angle = Math.random() * 360;
+                this.spin = Math.random() * 2 - 1;
+                this.wind = Math.random() * 1 - 0.5;
+            }
+
+            update() {
+                this.y += this.speed;
+                this.x += this.wind;
+                this.angle += this.spin;
+
+                if (this.y > canvas.height) {
+                    this.y = -50;
+                    this.x = Math.random() * canvas.width;
+                }
+            }
+
+            draw() {
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.rotate(this.angle * Math.PI / 180);
+                ctx.font = `${this.size}px serif`;
+                ctx.fillText(roseEmoji, 0, 0);
+                ctx.restore();
+            }
         }
+
+        function init() {
+            for (let i = 0; i < 40; i++) {
+                petals.push(new Petal());
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            petals.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            requestAnimationFrame(animate);
+        }
+
+        function showMsg() {
+            document.getElementById('message-overlay').style.display = 'flex';
+        }
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+
+        init();
+        animate();
     </script>
 </body>
 </html>
