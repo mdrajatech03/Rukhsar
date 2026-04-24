@@ -3,28 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Rehmani Edition | Rose Rain</title>
+    <title>The Rehmani Edition | Birthday Celebration</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,700;1,400&family=Poppins:wght@200;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,700;1,400&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <style>
         :root {
-            --primary: #800020;
+            --primary: #800020; /* Deep Burgundy */
             --gold: #c9a543;
             --white: #ffffff;
+            --black: #121212;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            background-color: #000;
+            background-color: var(--black);
             font-family: 'Poppins', sans-serif;
             overflow: hidden;
             height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
         }
 
         /* --- Rose Rain Canvas --- */
@@ -33,30 +31,31 @@
             top: 0; left: 0;
             width: 100%; height: 100%;
             pointer-events: none;
-            z-index: 99;
+            z-index: 9999; /* Sabse upar */
         }
 
-        /* --- Responsive Main Container --- */
+        /* --- Main Responsive Card --- */
         .master-card {
             width: 90vw;
+            max-width: 1000px;
             height: 80vh;
             background: var(--white);
             display: flex;
+            margin: 10vh auto;
             box-shadow: 0 50px 100px rgba(0,0,0,0.5);
-            border-radius: 8px;
+            border-radius: 4px;
             overflow: hidden;
-            z-index: 100;
             position: relative;
         }
 
-        /* Photo Section */
+        /* Home Page Photo Section */
         .photo-side {
             flex: 1.2;
             background: url('1000372340.jpg') center/cover no-repeat;
-            filter: contrast(1.1);
+            filter: contrast(1.05);
         }
 
-        /* Content Section */
+        /* Home Page Text Section */
         .text-side {
             flex: 1;
             padding: 60px;
@@ -64,7 +63,6 @@
             flex-direction: column;
             justify-content: center;
             background: white;
-            position: relative;
         }
 
         .label {
@@ -88,11 +86,11 @@
             font-weight: 300;
             line-height: 1.6;
             margin-bottom: 40px;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
         }
 
         .btn-surprise {
-            padding: 15px 40px;
+            padding: 18px 45px;
             background: var(--primary);
             color: white;
             border: none;
@@ -105,39 +103,66 @@
         }
 
         .btn-surprise:hover {
+            background: #a50029;
+            box-shadow: 0 15px 30px rgba(128, 0, 32, 0.3);
             transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(128, 0, 32, 0.3);
         }
 
-        /* Floating Icons */
-        .icons-float {
-            position: absolute;
-            top: 40px; right: 40px;
-            color: var(--primary);
-            text-align: center;
-        }
-
-        /* Mobile Adjustments */
-        @media (max-width: 768px) {
-            .master-card { flex-direction: column; height: auto; margin-top: 20px; }
-            .photo-side { height: 300px; }
-            .text-side { padding: 40px 20px; text-align: center; align-items: center; }
-            h1 { font-size: 2.5rem; }
-            .icons-float { display: none; }
-        }
-
-        /* Message Overlay */
-        #message-overlay {
+        /* --- Surprise Page (Overlay) --- */
+        #overlay {
             position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(128, 0, 32, 0.95);
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(128, 0, 32, 0.98); /* Luxury Red Background */
             display: none;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
-            z-index: 2000;
+            z-index: 5000;
             color: white;
             text-align: center;
             padding: 20px;
+        }
+
+        /* Photo on Next Page */
+        .reveal-photo {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            border: 4px solid var(--gold);
+            background: url('1000372340.jpg') center/cover no-repeat;
+            margin-bottom: 30px;
+            box-shadow: 0 0 30px rgba(0,0,0,0.5);
+            animation: zoomIn 1s ease;
+        }
+
+        .message-title {
+            font-family: 'Bodoni Moda', serif;
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: var(--gold);
+        }
+
+        .message-text {
+            font-size: 1.1rem;
+            max-width: 600px;
+            line-height: 1.8;
+            font-weight: 300;
+            font-style: italic;
+        }
+
+        /* Mobile View Fixes */
+        @media (max-width: 768px) {
+            .master-card { flex-direction: column; height: auto; margin-top: 5vh; }
+            .photo-side { height: 350px; }
+            .text-side { padding: 40px 20px; text-align: center; align-items: center; }
+            h1 { font-size: 2.8rem; }
+            .reveal-photo { width: 140px; height: 140px; }
+        }
+
+        @keyframes zoomIn {
+            from { transform: scale(0.5); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
         }
     </style>
 </head>
@@ -148,26 +173,24 @@
     <div class="master-card">
         <div class="photo-side"></div>
         <div class="text-side">
-            <div class="icons-float">
-                <i class="fa-solid fa-cake-candles" style="color: var(--gold); font-size: 1.5rem;"></i>
-            </div>
-            <span class="label">The Exclusive Edition</span>
+            <span class="label">The Invitation</span>
             <h1>Rukhsar <br> Rehmani</h1>
             <p class="desc">
-                Unveiling a special digital celebration for a soul that defines elegance. May your day be as fragrant as the roses falling around you.
+                A digital experience crafted for someone truly special. Every rose falling here carries a wish for your beautiful journey ahead.
             </p>
-            <button class="btn-surprise" onclick="showMsg()">The Surprise</button>
+            <button class="btn-surprise" onclick="openSurprise()">The Surprise</button>
         </div>
     </div>
 
-    <div id="message-overlay">
-        <div>
-            <h2 style="font-family: 'Bodoni Moda'; font-size: 3rem; margin-bottom: 20px;">Happy Birthday!</h2>
-            <p style="font-style: italic; font-weight: 200; font-size: 1.2rem; max-width: 500px;">
-                "Rukhsar, May your path always be covered in roses and your life filled with sweet celebrations."
-            </p>
-            <button class="btn-surprise" style="background: white; color: var(--primary); margin-top: 40px;" onclick="location.reload()">Return</button>
-        </div>
+    <div id="overlay">
+        <div class="reveal-photo"></div>
+        
+        <h2 class="message-title">Happy Birthday!</h2>
+        <p class="message-text">
+            "Wishing you a year as magnificent as your presence, Rukhsar. May your path always be fragrant with joy and success."
+        </p>
+        
+        <button class="btn-surprise" style="background: white; color: var(--primary); margin-top: 40px;" onclick="location.reload()">Back to Start</button>
     </div>
 
     <script>
@@ -184,24 +207,21 @@
             constructor() {
                 this.x = Math.random() * canvas.width;
                 this.y = Math.random() * canvas.height - canvas.height;
-                this.size = Math.random() * 20 + 15;
+                this.size = Math.random() * 25 + 15;
                 this.speed = Math.random() * 2 + 1;
                 this.angle = Math.random() * 360;
                 this.spin = Math.random() * 2 - 1;
                 this.wind = Math.random() * 1 - 0.5;
             }
-
             update() {
                 this.y += this.speed;
                 this.x += this.wind;
                 this.angle += this.spin;
-
                 if (this.y > canvas.height) {
                     this.y = -50;
                     this.x = Math.random() * canvas.width;
                 }
             }
-
             draw() {
                 ctx.save();
                 ctx.translate(this.x, this.y);
@@ -213,22 +233,17 @@
         }
 
         function init() {
-            for (let i = 0; i < 40; i++) {
-                petals.push(new Petal());
-            }
+            for (let i = 0; i < 40; i++) { petals.push(new Petal()); }
         }
 
         function animate() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            petals.forEach(p => {
-                p.update();
-                p.draw();
-            });
+            petals.forEach(p => { p.update(); p.draw(); });
             requestAnimationFrame(animate);
         }
 
-        function showMsg() {
-            document.getElementById('message-overlay').style.display = 'flex';
+        function openSurprise() {
+            document.getElementById('overlay').style.display = 'flex';
         }
 
         window.addEventListener('resize', () => {
