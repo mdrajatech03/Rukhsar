@@ -1,189 +1,224 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Interactive 3D Gesture Particle System</title>
-  <style>
-    body { margin:0; overflow:hidden; background:black; }
-    video { display:none; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Celebration | Rukhsar Rehmani</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --gold: #d4af37;
+            --deep-red: #800020;
+            --soft-white: #fffafa;
+            --shadow: rgba(0, 0, 0, 0.15);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--soft-white);
+            font-family: 'Poppins', sans-serif;
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Premium Gradient Background */
+        .bg-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at center, #ffffff 0%, #fce4ec 100%);
+            z-index: -1;
+        }
+
+        .main-card {
+            background: white;
+            padding: 60px;
+            border-radius: 2px; /* Professional minimal look */
+            box-shadow: 0 20px 50px var(--shadow);
+            text-align: center;
+            position: relative;
+            border-top: 5px solid var(--gold);
+            animation: slideUp 1.2s cubic-bezier(0.23, 1, 0.32, 1);
+            max-width: 600px;
+            width: 90%;
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            color: var(--deep-red);
+            letter-spacing: 2px;
+            margin-bottom: 5px;
+        }
+
+        .subtitle {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            color: #888;
+            margin-bottom: 40px;
+        }
+
+        /* Minimalist Animated Rose */
+        .rose-box {
+            margin: 30px auto;
+            width: 60px;
+            height: 100px;
+        }
+
+        .rose-petal {
+            width: 40px;
+            height: 40px;
+            background: var(--deep-red);
+            border-radius: 50% 50% 0 50%;
+            margin: 0 auto;
+            transform: rotate(45deg);
+            animation: pulseRose 2s infinite ease-in-out;
+            box-shadow: -5px 5px 15px rgba(128, 0, 32, 0.3);
+        }
+
+        .rose-stem {
+            width: 2px;
+            height: 50px;
+            background: #2d6a4f;
+            margin: -5px auto 0;
+        }
+
+        /* Professional Animated Cake */
+        .cake-container {
+            position: relative;
+            margin: 50px auto;
+            width: 120px;
+        }
+
+        .cake-base {
+            height: 60px;
+            background: #fdf0d5;
+            border-bottom: 4px solid var(--gold);
+            border-radius: 5px 5px 0 0;
+            position: relative;
+        }
+
+        .icing {
+            height: 15px;
+            background: #ffb3c1;
+            width: 100%;
+            border-radius: 10px 10px 0 0;
+            position: absolute;
+            top: 0;
+        }
+
+        .candle {
+            width: 6px;
+            height: 25px;
+            background: repeating-linear-gradient(45deg, #fff, #fff 5px, var(--gold) 5px, var(--gold) 10px);
+            margin: -25px auto 0;
+            position: relative;
+        }
+
+        .flame {
+            width: 10px;
+            height: 15px;
+            background: #ff9d00;
+            border-radius: 50% 50% 20% 20%;
+            position: absolute;
+            top: -18px;
+            left: -2px;
+            animation: glow 0.5s infinite alternate;
+            box-shadow: 0 0 15px #ff9d00;
+        }
+
+        /* Buttons & Interactions */
+        .reveal-btn {
+            background: transparent;
+            border: 1px solid var(--gold);
+            color: var(--gold);
+            padding: 15px 40px;
+            font-size: 0.8rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: 0.4s;
+            margin-top: 30px;
+        }
+
+        .reveal-btn:hover {
+            background: var(--gold);
+            color: white;
+        }
+
+        /* Animations */
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes pulseRose {
+            0%, 100% { transform: rotate(45deg) scale(1); }
+            50% { transform: rotate(45deg) scale(1.1); }
+        }
+
+        @keyframes glow {
+            from { opacity: 0.8; transform: scale(1); }
+            to { opacity: 1; transform: scale(1.2); }
+        }
+
+        /* Message Overlay */
+        #message {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: white;
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+        }
+    </style>
 </head>
 <body>
 
-<script src="https://cdn.jsdelivr.net/npm/three@0.158.0/build/three.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"></script>
+<div class="bg-overlay"></div>
+
+<div class="main-card">
+    <div class="subtitle">Celebrating</div>
+    <h1>Rukhsar Rehmani</h1>
+    
+    <div class="rose-box">
+        <div class="rose-petal"></div>
+        <div class="rose-stem"></div>
+    </div>
+
+    <div class="cake-container">
+        <div class="candle"><div class="flame"></div></div>
+        <div class="cake-base"><div class="icing"></div></div>
+    </div>
+
+    <p style="color: #666; line-height: 1.6; font-style: italic;">
+        "Excellence is not an act, but a habit. Just like the joy you bring into my life."
+    </p>
+    
+    <button class="reveal-btn" onclick="showMessage()">The Message</button>
+</div>
+
+<div id="message">
+    <div>
+        <h2 style="font-family: 'Playfair Display'; font-size: 2.5rem; color: var(--deep-red);">Happy Birthday, Rukhsar!</h2>
+        <p style="margin: 20px 0; color: #555;">May your year be as elegant and brilliant as you are.</p>
+        <button class="reveal-btn" onclick="location.reload()">Back</button>
+    </div>
+</div>
 
 <script>
-let scene, camera, renderer, particles, geometry;
-let particleCount = 5000;
-let currentShape = "heart";
-let expansion = 1;
-let handX = 0, handY = 0;
-
-init();
-initHandTracking();
-animate();
-
-function init() {
-  scene = new THREE.Scene();
-  camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
-  camera.position.z = 5;
-
-  renderer = new THREE.WebGLRenderer({ antialias:true });
-  renderer.setSize(window.innerWidth, window.innerHeight);
-  document.body.appendChild(renderer.domElement);
-
-  createParticles("heart");
-}
-
-function createParticles(shape) {
-  if(particles) scene.remove(particles);
-
-  geometry = new THREE.BufferGeometry();
-  const positions = new Float32Array(particleCount * 3);
-  const colors = new Float32Array(particleCount * 3);
-
-  for(let i=0; i<particleCount; i++){
-    let pos = getShapePosition(shape, i);
-    positions[i*3] = pos.x;
-    positions[i*3+1] = pos.y;
-    positions[i*3+2] = pos.z;
-
-    colors[i*3] = Math.random();
-    colors[i*3+1] = Math.random();
-    colors[i*3+2] = Math.random();
-  }
-
-  geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-  geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
-
-  const material = new THREE.PointsMaterial({
-    size: 0.05,
-    vertexColors: true
-  });
-
-  particles = new THREE.Points(geometry, material);
-  scene.add(particles);
-}
-
-function getShapePosition(shape, i){
-  let t = Math.random() * Math.PI * 2;
-
-  if(shape === "heart"){
-    let x = 16 * Math.pow(Math.sin(t),3) / 20;
-    let y = (13*Math.cos(t)-5*Math.cos(2*t)-2*Math.cos(3*t)-Math.cos(4*t))/20;
-    return {x, y, z:(Math.random()-0.5)};
-  }
-
-  if(shape === "flower"){
-    let r = Math.sin(6*t);
-    return {
-      x: r*Math.cos(t),
-      y: r*Math.sin(t),
-      z:(Math.random()-0.5)
-    };
-  }
-
-  if(shape === "saturn"){
-    let r = 1.5 + Math.random()*0.2;
-    return {
-      x: r*Math.cos(t),
-      y: (Math.random()-0.5)*0.3,
-      z: r*Math.sin(t)
-    };
-  }
-
-  if(shape === "fireworks"){
-    return {
-      x:(Math.random()-0.5)*3,
-      y:(Math.random()-0.5)*3,
-      z:(Math.random()-0.5)*3
-    };
-  }
-}
-
-function animate(){
-  requestAnimationFrame(animate);
-
-  particles.rotation.y += 0.01;
-
-  particles.scale.set(expansion, expansion, expansion);
-
-  particles.position.x = handX * 2;
-  particles.position.y = -handY * 2;
-
-  renderer.render(scene, camera);
-}
-
-/* ========================= */
-/*       HAND TRACKING       */
-/* ========================= */
-
-function initHandTracking(){
-  const videoElement = document.createElement("video");
-
-  const hands = new Hands({
-    locateFile: file => `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`
-  });
-
-  hands.setOptions({
-    maxNumHands: 1,
-    minDetectionConfidence: 0.7,
-    minTrackingConfidence: 0.7
-  });
-
-  hands.onResults(results => {
-    if(results.multiHandLandmarks.length > 0){
-      const landmarks = results.multiHandLandmarks[0];
-
-      handX = landmarks[9].x - 0.5;
-      handY = landmarks[9].y - 0.5;
-
-      const thumb = landmarks[4];
-      const index = landmarks[8];
-
-      const dx = thumb.x - index.x;
-      const dy = thumb.y - index.y;
-      const distance = Math.sqrt(dx*dx + dy*dy);
-
-      expansion = 1 + (0.1 - distance) * 5;
-
-      if(distance < 0.05){
-        switchShape();
-      }
-
-      updateColors(distance);
+    function showMessage() {
+        const msg = document.getElementById('message');
+        msg.style.display = 'flex';
+        msg.style.animation = 'slideUp 0.8s ease';
     }
-  });
-
-  const cameraFeed = new Camera(videoElement, {
-    onFrame: async () => {
-      await hands.send({image: videoElement});
-    },
-    width: 640,
-    height: 480
-  });
-
-  cameraFeed.start();
-}
-
-function switchShape(){
-  const shapes = ["heart","flower","saturn","fireworks"];
-  let index = shapes.indexOf(currentShape);
-  index = (index + 1) % shapes.length;
-  currentShape = shapes[index];
-  createParticles(currentShape);
-}
-
-function updateColors(distance){
-  const colors = geometry.attributes.color.array;
-  for(let i=0; i<particleCount; i++){
-    colors[i*3] = 1 - distance*5;
-    colors[i*3+1] = Math.random();
-    colors[i*3+2] = distance*5;
-  }
-  geometry.attributes.color.needsUpdate = true;
-}
 </script>
 
 </body>
