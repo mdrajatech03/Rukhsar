@@ -3,17 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Rehmani Edition | Birthday Celebration</title>
+    <title>The Rehmani Edition | Exclusive</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,700;1,400&family=Poppins:wght@200;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,700;1,400&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            --primary-burgundy: #800020;
-            --gold-accent: #c9a543;
-            --off-white: #fffafa;
-            --text-gray: #555;
-            --transition: 1s cubic-bezier(0.85, 0, 0.15, 1);
+            --primary: #800020; /* Deep Burgundy */
+            --gold: #c9a543;
+            --white: #ffffff;
+            --bg-light: #f9f9f9;
         }
 
         * {
@@ -22,179 +21,145 @@
             box-sizing: border-box;
         }
 
-        body {
+        body, html {
+            height: 100%;
+            width: 100%;
             font-family: 'Poppins', sans-serif;
-            background-color: var(--off-white);
-            overflow: hidden; /* Scroll disable for professional feel */
-            height: 100vh;
+            overflow: hidden; /* No scrollbars */
+            background: var(--bg-light);
         }
 
-        /* --- Global Viewport Slider --- */
-        .master-slider {
+        /* --- Section 1: Landing --- */
+        #page1 {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
             display: flex;
-            width: 200vw; /* Do screens ke liye double width */
-            height: 100vh;
-            transition: var(--transition);
+            z-index: 1;
+            transition: transform 1s cubic-bezier(0.7, 0, 0.3, 1);
         }
 
-        /* --- Section 1: Landing Page --- */
-        .screen {
-            width: 100vw;
-            height: 100vh;
-            display: flex;
-            position: relative;
-        }
-
-        /* Image Side */
-        .image-side {
+        .hero-image {
             flex: 1.2;
             background: url('1000372340.jpg') center center / cover no-repeat;
-            position: relative;
-            filter: grayscale(15%) contrast(105%);
+            filter: contrast(1.1) grayscale(10%);
         }
 
-        .image-side::after {
-            content: 'EXCLUSIVE';
-            position: absolute;
-            bottom: 40px;
-            left: 40px;
-            color: white;
-            letter-spacing: 8px;
-            font-size: 0.8rem;
-            opacity: 0.7;
-        }
-
-        /* Content Side */
-        .content-side {
+        .hero-text {
             flex: 1;
-            background: white;
+            background: var(--white);
             display: flex;
             flex-direction: column;
             justify-content: center;
-            padding: 80px;
-            position: relative;
+            padding: 60px;
         }
 
-        .luxe-label {
-            font-size: 0.75rem;
-            letter-spacing: 5px;
+        .luxe-tag {
+            font-size: 0.7rem;
+            letter-spacing: 6px;
             text-transform: uppercase;
-            color: var(--gold-accent);
-            margin-bottom: 20px;
-            display: block;
+            color: var(--gold);
+            margin-bottom: 15px;
         }
 
         h1 {
             font-family: 'Bodoni Moda', serif;
-            font-size: 4.5rem;
-            line-height: 0.9;
-            color: var(--primary-burgundy);
+            font-size: 4rem;
+            color: var(--primary);
+            line-height: 1.1;
             margin-bottom: 25px;
         }
 
-        .description {
-            color: var(--text-gray);
-            font-weight: 200;
+        .sub-text {
+            color: #666;
+            font-size: 0.95rem;
             line-height: 1.6;
             margin-bottom: 40px;
             max-width: 400px;
         }
 
-        /* Professional Button */
-        .btn-surprise {
-            padding: 18px 40px;
-            background: none;
-            border: 1px solid var(--primary-burgundy);
-            color: var(--primary-burgundy);
+        .btn-main {
+            padding: 16px 35px;
+            background: transparent;
+            border: 1px solid var(--primary);
+            color: var(--primary);
             text-transform: uppercase;
-            letter-spacing: 4px;
+            letter-spacing: 3px;
             font-size: 0.8rem;
             cursor: pointer;
-            position: relative;
-            overflow: hidden;
-            transition: 0.5s;
+            transition: 0.4s;
             width: fit-content;
         }
 
-        .btn-surprise:hover {
-            background: var(--primary-burgundy);
-            color: white;
-            box-shadow: 0 15px 30px rgba(128, 0, 32, 0.2);
+        .btn-main:hover {
+            background: var(--primary);
+            color: var(--white);
+            box-shadow: 0 10px 30px rgba(128, 0, 32, 0.2);
         }
 
-        /* --- Section 2: The Reveal Page --- */
-        .screen-reveal {
-            background-color: var(--primary-burgundy);
+        /* --- Section 2: Surprise (Hidden initially) --- */
+        #page2 {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: var(--primary);
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             text-align: center;
-            color: white;
+            color: var(--white);
+            z-index: 2;
+            transform: translateY(100%); /* Start from bottom */
+            transition: transform 1s cubic-bezier(0.7, 0, 0.3, 1);
         }
 
-        /* Animated Rose */
-        .rose-container {
-            margin-bottom: 30px;
-            animation: float 3s infinite ease-in-out;
+        .page2-active {
+            transform: translateY(0) !important;
         }
 
         .rose-icon {
             font-size: 4rem;
+            margin-bottom: 20px;
+            animation: float 3s infinite ease-in-out;
         }
 
-        .message-title {
+        .birthday-title {
             font-family: 'Bodoni Moda', serif;
             font-size: 3rem;
             margin-bottom: 20px;
-            opacity: 0;
-            transform: translateY(30px);
         }
 
-        .message-body {
+        .birthday-msg {
             font-size: 1.1rem;
             max-width: 600px;
             line-height: 1.8;
-            font-weight: 200;
+            font-weight: 300;
             font-style: italic;
-            opacity: 0;
-            transform: translateY(30px);
+            padding: 0 20px;
         }
 
-        /* Back Button on Page 2 */
-        .btn-back {
+        .btn-close {
             margin-top: 50px;
             background: transparent;
-            border: 1px solid var(--gold-accent);
-            color: var(--gold-accent);
+            border: 1px solid var(--gold);
+            color: var(--gold);
             padding: 10px 25px;
             cursor: pointer;
             text-transform: uppercase;
             letter-spacing: 2px;
         }
 
-        /* --- Transitions --- */
-        .slide-active {
-            transform: translateX(-100vw);
-        }
-
-        .fade-in-text {
-            animation: textFadeUp 1.5s forwards 0.8s;
-        }
-
-        @keyframes textFadeUp {
-            to { opacity: 1; transform: translateY(0); }
-        }
-
+        /* --- Animations --- */
         @keyframes float {
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(-20px); }
         }
 
-        /* Confetti Canvas */
-        #canvas {
+        #confetti {
             position: fixed;
             top: 0; left: 0;
+            width: 100%; height: 100%;
             pointer-events: none;
             z-index: 100;
         }
@@ -202,93 +167,75 @@
 </head>
 <body>
 
-    <canvas id="canvas"></canvas>
+    <canvas id="confetti"></canvas>
 
-    <div class="master-slider" id="slider">
-        
-        <section class="screen">
-            <div class="image-side"></div>
-            <div class="content-side">
-                <span class="luxe-label">Celebrating You</span>
-                <h1>Rukhsar <br> Rehmani</h1>
-                <p class="description">
-                    A digital tribute to a personality that defines grace and elegance. Tap the button to unlock your special birthday surprise.
-                </p>
-                <button class="btn-surprise" onclick="revealSurprise()">Unlock Surprise</button>
-            </div>
-        </section>
-
-        <section class="screen screen-reveal">
-            <div class="rose-container">
-                <div class="rose-icon">🌹</div>
-            </div>
-            <h2 class="message-title" id="msgTitle">Happy Birthday, Rukhsar!</h2>
-            <p class="message-body" id="msgBody">
-                "May your day be filled with the same light and warmth you bring to everyone around you. You are truly one of a kind. Here's to a year as beautiful as your soul."
+    <div id="page1">
+        <div class="hero-image"></div>
+        <div class="hero-text">
+            <span class="luxe-tag">Private Invitation</span>
+            <h1>Rukhsar <br> Rehmani</h1>
+            <p class="sub-text">
+                A specially curated digital experience to celebrate the elegance and grace you bring to the world.
             </p>
-            <button class="btn-back" onclick="goBack()">Back to Start</button>
-        </section>
+            <button class="btn-main" onclick="openSurprise()">Unlock Surprise</button>
+        </div>
+    </div>
 
+    <div id="page2">
+        <div class="rose-icon">🌹</div>
+        <h2 class="birthday-title">Happy Birthday, Rukhsar!</h2>
+        <p class="birthday-msg">
+            "Wishing you a year filled with as much beauty and brilliance as you possess. 
+            May every moment be a celebration of the amazing person you are."
+        </p>
+        <button class="btn-close" onclick="closeSurprise()">Back</button>
     </div>
 
     <script>
-        function revealSurprise() {
-            // Slide transition
-            document.getElementById('slider').classList.add('slide-active');
-            
-            // Text animations on second page
-            document.getElementById('msgTitle').classList.add('fade-in-text');
-            document.getElementById('msgBody').classList.add('fade-in-text');
-            
-            // Start Confetti
+        function openSurprise() {
+            // Page 2 ko screen par laane ke liye
+            document.getElementById('page2').classList.add('page2-active');
             startConfetti();
         }
 
-        function goBack() {
-            document.getElementById('slider').classList.remove('slide-active');
+        function closeSurprise() {
+            // Page 2 ko wapas niche bhejne ke liye
+            document.getElementById('page2').classList.remove('page2-active');
         }
 
-        // --- Premium Confetti Engine ---
-        const canvas = document.getElementById('canvas');
+        // --- Basic Confetti Engine ---
+        const canvas = document.getElementById('confetti');
         const ctx = canvas.getContext('2d');
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-
         let particles = [];
-        const colors = ['#800020', '#c9a543', '#ffffff', '#ffb3c1'];
 
         function startConfetti() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
             for(let i=0; i<100; i++) {
                 particles.push({
                     x: Math.random() * canvas.width,
                     y: Math.random() * canvas.height - canvas.height,
-                    size: Math.random() * 7 + 3,
-                    speedY: Math.random() * 5 + 2,
-                    speedX: Math.random() * 3 - 1.5,
-                    color: colors[Math.floor(Math.random() * colors.length)]
+                    size: Math.random() * 6 + 2,
+                    speedY: Math.random() * 3 + 2,
+                    color: ['#c9a543', '#ffffff', '#ffb3c1'][Math.floor(Math.random()*3)]
                 });
             }
-            updateConfetti();
+            requestAnimationFrame(updateConfetti);
         }
 
         function updateConfetti() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            particles.forEach((p, index) => {
+            particles.forEach((p, i) => {
                 p.y += p.speedY;
-                p.x += p.speedX;
                 ctx.fillStyle = p.color;
                 ctx.beginPath();
-                ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                ctx.arc(p.x, p.y, p.size, 0, Math.PI*2);
                 ctx.fill();
-
-                if(p.y > canvas.height) {
-                    particles.splice(index, 1);
-                }
+                if(p.y > canvas.height) particles.splice(i, 1);
             });
-            if(particles.length > 0) {
-                requestAnimationFrame(updateConfetti);
-            }
+            if(particles.length > 0) requestAnimationFrame(updateConfetti);
         }
     </script>
+
 </body>
 </html>
